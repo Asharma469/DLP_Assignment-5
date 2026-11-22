@@ -80,6 +80,32 @@ Examples:
 
 Native execution is sufficient for elapsed-time measurements and only requires GCC and the host CPU instruction set selected at build time.
 
+## Automation scripts
+
+The project includes scripts for building, optionally running under gem5, and summarizing gem5 statistics:
+
+```bash
+./build_dlp_benchmarks.sh
+./run_dlp_experiments.sh
+```
+
+`build_dlp_benchmarks.sh` creates `dlp_image_bench_scalar`, `dlp_image_bench_avx2_gem5`, and `dlp_image_bench_openmp`.
+
+`run_dlp_experiments.sh` runs all three binaries directly on the host; it does not require gem5:
+
+```bash
+ITERATIONS=50 ./run_dlp_experiments.sh
+```
+
+For gem5 runs, use `run_gem5_dlp_experiments.sh`. Override its gem5 path and output location if needed:
+
+```bash
+GEM5_BIN=/path/to/gem5.opt \
+OUT_DIR=results_dlp \
+ITERATIONS=50 \
+./run_gem5_dlp_experiments.sh
+```
+
 ## Optional gem5 X86 simulation
 
 Use gem5 only if simulated instruction, cache, or timing statistics are required. It does not provide the benchmark's native wall-clock timing.
