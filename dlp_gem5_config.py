@@ -8,7 +8,8 @@ parser.add_argument("--cpu_type", type=str, default="o3", help="cpu type: timing
 parser.add_argument("--width", type=int, default=4, help="fetch/decode/issue width for O3CPU")
 parser.add_argument("--bp_type", type=str, default="TournamentBP", help="branch predictor type: LocalBP, TournamentBP, BiModeBP")
 parser.add_argument("--cmd", type=str, default="./hello_world", help="binary workload executable")
-parser.add_argument("--options", type=str, default="1", help="workload arguments (stride)")
+parser.add_argument("--mode", type=int, default=0, help="benchmark mode: 0=scalar, 1=AVX2, 2=OpenMP")
+parser.add_argument("--iterations", type=int, default=50, help="benchmark iterations")
 args = parser.parse_args()
 
 # System and Clock Domain Setup
@@ -97,7 +98,7 @@ system.system_port = system.membus.cpu_side_ports
 
 # Workload Process Setup
 process = Process()
-process.cmd = [args.cmd, args.options]
+process.cmd = [args.cmd, str(args.mode), str(args.iterations)]
 system.cpu.workload = process
 system.cpu.createThreads()
 
